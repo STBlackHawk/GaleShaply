@@ -1,25 +1,28 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 
 public class GaleShaply {
 
-    public static void galeshaply(String[] arg1){
+    public static void main(String[] arg1) throws FileNotFoundException {
 
         // Getting command line as input and put it into a array
-        Scanner comand = new Scanner(System.in);
-        System.out.print("Type in your command");
 
-        String input = comand.nextLine();
-
-        //spliting using a single space the command into diiferent componenst so it can detect
-        // which command it needs to be done
-
-        String[] comandDiv = input.split("");
 
         //checking the second command word find or check to run the algorithm in the right direction
-        if ( comandDiv[2] == "find" ) {}
-        if (comandDiv[2] == "check"){}
-        else{};
+        if ( arg1[0].equals("find")  ) {
+
+
+            Scanner boys = new Scanner( new FileReader(arg1[1]));
+            Scanner girls = new Scanner(new FileReader(arg1[2]));
+            int test = boys.nextInt();
+            System.out.print("test is ok "+ test);
+
+        }
+         else if(arg1[0].equals( "check")){}
+        else{ System.out.print("shuhs");}
+        };
 
 
 
@@ -27,4 +30,4 @@ public class GaleShaply {
 
 
     }
-}
+
