@@ -1,18 +1,18 @@
 import java.util.NoSuchElementException;
 
 
-public class QueueLinkedList <Object>{
+public class QueueLinkedList <Integer>{
 
 
-    private class Node<Object>{
-        private Object data;
+    private class Node<Integer>{
+        private Integer data;
         private Node  next;
 
     }
 
     private int n;
-    private Node<Object> first;
-    private Node<Object> last;
+    private Node<Integer> first;
+    private Node<Integer> last;
 
 
     public QueueLinkedList(){
@@ -27,13 +27,13 @@ public class QueueLinkedList <Object>{
 
     public boolean isEmpty(){return first == null;}
 
-    public Object peek(){
+    public Integer peek(){
         if (isEmpty())throw new NoSuchElementException("Queue is empty");
         return first.data;
     }
 
 
-    public void adToQueue(Object d){
+    public void adToQueue(Integer d){
         Node oldlast = last;
         last = new Node<>();
         last.data = d;
@@ -44,9 +44,9 @@ public class QueueLinkedList <Object>{
 
     }
 
-    public Object takeFromQueue(){
+    public Integer takeFromQueue(){
         if (isEmpty())throw new NoSuchElementException("Queue is empty");
-        Object d = first.data;
+        Integer d = first.data;
         first = first.next;
         n--;
         return d;
