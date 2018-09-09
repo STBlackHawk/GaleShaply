@@ -16,6 +16,7 @@ public class GaleShaply {
 
         String[] comandDiv = input.split("");
 
+        //checking the second command word find or check to run the algorithm in the right direction
         if ( comandDiv[2] == "find" ) {}
         if (comandDiv[2] == "check"){}
         else{};
