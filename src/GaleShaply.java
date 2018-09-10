@@ -17,14 +17,16 @@ public class GaleShaply {
         //checking the second command word find or check to run the algorithm in the right direction
         if (arg[0].equals("find")) {
 
-            ArrayList<QueueLinkedList<Integer>> Menpreferences = new ArrayList<QueueLinkedList<Integer>>();
+            //Creating an array that each element of it is a Queue which is the men preference list
+            ArrayList<QueueLinkedList<Integer>> menpreferences = new ArrayList<QueueLinkedList<Integer>>();
+            ArrayList[][] womenpreference = new ArrayList[menpreferences.size()][menpreferences.size()];
 
+            // creating a Scanner file for boys preference which file name
+            // should be the same as your second word of the argument in
+            // your command line
+            Scanner boys = new Scanner(new File(arg[1]));
 
-            // reading files and puting them into a 2D array first
-
-                Scanner boys = new Scanner(new File(arg[1]));
-
-
+            //reading text from the first argument file and putting each integer into its position
             while(boys.hasNextLine()) {
 
                 Scanner MenPrefReader = new Scanner(boys.nextLine());
@@ -33,27 +35,20 @@ public class GaleShaply {
                 while (MenPrefReader.hasNextInt()) {
                     EMenpref.adToQueue(MenPrefReader.nextInt());
                 }
-                Menpreferences.add(EMenpref);
+                menpreferences.add(EMenpref);
 
-                //System.out.println(Menpreferences.size());
+
             }
 
-            int test = Menpreferences.get(1).takeFromQueue();
-            System.out.print(test);
-//            System.out.println(EMenpref.size());
-//            System.out.println(Menpreferences.size());
-                //Closing the boys file
-                System.out.print(Menpreferences);
-                boys.close();
+            boys.close();
+
+            // creating a Scanner file for girls preference which file name
+            // should be the same as your second word of the argument in
+            // your command line
+            Scanner girls = new Scanner (new File(arg[2]));
 
 
 
-
-
-
-            //Scanner girls = new Scanner(new FileReader(arg[2]));
-            //int test = boys.nextInt();
-           // test the body of the loop by System.out.print("test is ok "+ test);
 
         }
          else if(arg[0].equals( "check")){}
