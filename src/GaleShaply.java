@@ -8,16 +8,17 @@ import java.util.Scanner;
 
 public class GaleShaply {
 
+    // Getting command line as one argument input and put it into a array of strings
     public static void main(String[] arg) throws FileNotFoundException {
 
-        // Getting command line as input and put it into a array
+
 
 
         //checking the second command word find or check to run the algorithm in the right direction
-        if ( arg[0].equals("find")  ) {
+        if (arg[0].equals("find")) {
 
-            ArrayList<QueueLinkedList<Object>> Menpreferences = new ArrayList<QueueLinkedList<Object>>();
-            QueueLinkedList EMenpref = new QueueLinkedList();
+            ArrayList<QueueLinkedList<Integer>> Menpreferences = new ArrayList<QueueLinkedList<Integer>>();
+
 
             // reading files and puting them into a 2D array first
 
@@ -27,21 +28,22 @@ public class GaleShaply {
             while(boys.hasNextLine()) {
 
                 Scanner MenPrefReader = new Scanner(boys.nextLine());
+                QueueLinkedList EMenpref = new QueueLinkedList();
 
                 while (MenPrefReader.hasNextInt()) {
                     EMenpref.adToQueue(MenPrefReader.nextInt());
                 }
                 Menpreferences.add(EMenpref);
 
-
-
                 //System.out.println(Menpreferences.size());
-               //testing the reader file System.out.print(EMenpref);
-
             }
-            System.out.println(EMenpref.size());
-            System.out.println(Menpreferences.size());
+
+            int test = Menpreferences.get(1).takeFromQueue();
+            System.out.print(test);
+//            System.out.println(EMenpref.size());
+//            System.out.println(Menpreferences.size());
                 //Closing the boys file
+                System.out.print(Menpreferences);
                 boys.close();
 
 
