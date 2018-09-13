@@ -1,6 +1,7 @@
 
 import java.io.FileNotFoundException;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -28,15 +29,22 @@ public class GaleShaply {
             //Creating matrix with the number of men as the size of rows
             // and number of women size of comuns
             while (boys.hasNextLine()){
-                Rmen++;
+                ++Rmen;
                 Scanner Colmen = new Scanner(boys.nextLine());
-                while(Colmen.hasNextInt()){Cmen++;}
+                Cmen = 0;
+                while(Colmen.hasNextInt()){
+                    ++Cmen;
+                    Colmen.nextInt();
+                }
             }
+
+            boys.close();
+
 
             int menpref[][] = new int[Rmen][Cmen];
 
             //closing the file
-            boys.close();
+
 
             //Opening the file and
             //Copying the input into the matrix
@@ -45,7 +53,7 @@ public class GaleShaply {
 
             for (int i=0; i<Rmen; i++){
                 for (int j=0; j<Cmen; j++){
-                    menpref[i][j] = boys.nextInt();
+                  if(boys.hasNextInt()){ menpref[i][j] = boys.nextInt(); }
                 }
             }
             boys.close();
@@ -57,9 +65,13 @@ public class GaleShaply {
             Scanner girls = new Scanner(new File(arg[1]));
 
             while (girls.hasNextLine()){
-                Rwomen++;
+                ++Rwomen;
                 Scanner Colwomen = new Scanner(girls.nextLine());
-                while(Colwomen.hasNextInt()){Cwomen++;}
+                Cwomen = 0;
+                while(Colwomen.hasNextInt()){
+                    ++Cwomen;
+                    Colwomen.nextInt();
+                }
             }
 
             int womenpref[][] = new int[Rwomen][Cwomen];
@@ -70,30 +82,31 @@ public class GaleShaply {
             //Opening the file and
             //Copying the input into the matrix
 
-            girls = new Scanner(new File(arg[1]));
+            girls = new Scanner(new File(arg[2]));
 
             for (int i=0; i<Rwomen; i++){
                 for (int j=0; j<Cwomen; j++){
-                    womenpref[i][j] = girls.nextInt();
+
+                    if(girls.hasNextInt()){womenpref[i][j] = girls.nextInt();}
                 }
             }
             girls.close();
 
-//            //Reversing women's preference list for better search
-//            int[][] womenreverse = new int[Rwomen][Cwomen];
-//
-//            for (int i=0; i<Rwomen; i++){
-//                ArrayList<Integer> q = new ArrayList<Integer>();
-//                for (int j=0; j<Cwomen; j++){
-//
-//                    womenreverse[i][womenpref[i][j]]= j;
-//
-//
-//                }
-//            }
+            //Reversing women's preference list for better search
+            int[][] womenreverse = new int[Rwomen][Cwomen];
 
-            System.out.println(womenpref);
+            for (int i=0; i<Rwomen; i++){
+                ArrayList<Integer> q = new ArrayList<Integer>();
+                for (int j=0; j<Cwomen; j++){
 
+                    womenreverse[i][womenpref[i][j]-1]= j;
+
+
+                }
+            }
+
+            System.out.println(Arrays.deepToString(womenpref));
+            System.out.println(Arrays.deepToString(womenreverse));
 
 
 
