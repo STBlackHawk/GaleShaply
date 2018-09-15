@@ -123,7 +123,7 @@ public class GaleShaply {
         int[][] womenreverse = new int[Rwomen][Cwomen];
 
         for (int i = 0; i < Rwomen; i++) {
-            ArrayList<Integer> q = new ArrayList<Integer>();
+
             for (int j = 0; j < Cwomen; j++) {
 
                 womenreverse[i][womenpref[i][j]] = j;
@@ -135,7 +135,7 @@ public class GaleShaply {
 
         //Creats matched arrays indexes are husbands and what contains in that index is the wife
         ArrayList<Integer> matched = new ArrayList<>();
-        while(matched.size()< menpreferences.size()){matched.add(0);}
+        while(matched.size()< menpreferences.size()){matched.add(null);}
         //checking the second command word find or check to run the algorithm in the right direction
         if (arg[0].equals("find")) {
 
@@ -176,16 +176,68 @@ public class GaleShaply {
 
             }
 
-            for (int i = 0; i < matched.size(); i++)
-                System.out.println(i+1  + " " + (matched.get(i)+1));
+            for (int i = 0; i < matched.size(); i++) {
+                System.out.println(i + 1 + " " + (matched.get(i) + 1));
+            }
         }
 
 
-       else if(arg[0].equals( "check")){}
-        else{ System.out.print("shuhs");}
-    };
+       else if(arg[0].equals( "check")){
+            //Reads the data from the matching provided
+            Scanner matchList = new Scanner(new File(arg[3]));
+
+            //number of row and column of the matching type
+            int Rmatched = 4;
+            int Cmatched = 2;
 
 
+            ArrayList<Integer> matched2 = new ArrayList<>();
+            while ( matched2.size()< Rmatched){matched2.add(null);}
+
+            while(matchList.hasNextInt()) {
+                for (int i = 0; i < Rmatched; ++i) {
+                    for (int j = 0; j < Cmatched; ++j) {
+
+                       if (matchList.hasNextInt()){
+                           matched2.set(matchList.nextInt() - 1, matchList.nextInt() - 1);
+                       }
+
+                    }
+
+                }
+
+
+                //for (int i = 0; i < matched2.size(); i++) {
+                //    System.out.println(i + 1 + " " + (matched2.get(i) + 1));
+
+
+                }
+                int a = 0;
+                for (int i=0;i<matched2.size();++i ){
+
+                    for(int j =0; j< menpreferences.size(); j++){
+                        if(menpreferences.get(i).peek() == matched2.get(i)){break;}
+                        int k = menpreferences.get(i).takeFromQueue();
+                         if(womenreverse[k][i] < womenreverse[k][matched2.indexOf(k)]) {
+                            a++;
+
+                                    System.out.println((i + 1) + " " + (k + 1) + "  are an unstable match");
+                                } else {
+                             continue;
+                         }
+                        }
+                    }
+                    if(a==0){ System.out.println("you have stable matching");}
+                    else{
+                        System.out.println("your match is not stable");
+                        System.out.print("you have "+ a+" unstable matches");}
+
+                }
+
+
+            else{ System.out.print("shuhs");}
+
+        }
 
 
     }
