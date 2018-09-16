@@ -1,7 +1,6 @@
 
 import java.io.FileNotFoundException;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -12,16 +11,16 @@ public class GaleShaply {
     public static void main(String[] arg) throws FileNotFoundException {
 
 
-        //ArrayList husbandw = new ArrayList();
+
 
         //Creating an array that each element of it is a Queue which is the men preference list
         ArrayList<QueueLinkedList<Integer>> menpreferences = new ArrayList<>();
-        //ArrayList<ArrayList<Integer>> womenpreference = new ArrayList<>();
+
 
         // creating a Scanner file for boys preference which file name
         // should be the same as your second word of the argument in
         // your command line
-        Scanner boys = new Scanner(new File(arg[1]));
+        Scanner boys = new Scanner(new File(arg[1]+".txt"));
 
         //reading text from the first argument file and
         // putting each integer into its position
@@ -40,61 +39,19 @@ public class GaleShaply {
 
         boys.close();
 
-
-//        //Creats Number of men and wmen variable
-//        int Rmen = 0;
-//        int Cmen = 0;
-//
-//
-//        //creating a Scanner file for boys preference which file name
-//        // should be the same as your second word of the argument in
-//        // your command line
-//        Scanner boys = new Scanner(new File(arg[1]));
-//
-//        //Creating matrix with the number of men as the size of rows
-//        // and number of women size of comuns
-//        while (boys.hasNextLine()){
-//            ++Rmen;
-//            Scanner Colmen = new Scanner(boys.nextLine());
-//            Cmen = 0;
-//            while(Colmen.hasNextInt()){
-//                ++Cmen;
-//                Colmen.nextInt();
-//            }
-//        }
-//
-//        boys.close();
-//
-//
-//        int menpref[][] = new int[Rmen][Cmen];
-//
-//        //closing the file
-//
-//
-//        //Opening the file and
-//        //Copying the input into the matrix
-//
-//        boys = new Scanner(new File(arg[1]));
-//
-//        for (int i=0; i<Rmen; i++){
-//            for (int j=0; j<Cmen; j++){
-//                if(boys.hasNextInt()){ menpref[i][j] = boys.nextInt(); }
-//            }
-//        }
-//        boys.close();
-
-
+        //Creating the objects for the number of rows and columns for women's preference list
         int Rwomen = 0;
         int Cwomen = 0;
 
-        Scanner girls = new Scanner(new File(arg[1]));
+        //reading in the data file for gilrs just to determine the rows and columns matrix
+        Scanner girls = new Scanner(new File(arg[2]+".txt"));
 
         while (girls.hasNextLine()) {
-            ++Rwomen;
+            Rwomen++;
             Scanner Colwomen = new Scanner(girls.nextLine());
             Cwomen = 0;
             while (Colwomen.hasNextInt()) {
-                ++Cwomen;
+                Cwomen++;
                 Colwomen.nextInt();
             }
         }
@@ -107,7 +64,7 @@ public class GaleShaply {
         //Opening the file and
         //Copying the input into the matrix
 
-        girls = new Scanner(new File(arg[2]));
+        girls = new Scanner(new File(arg[2]+".txt"));
 
         for (int i = 0; i < Rwomen; i++) {
             for (int j = 0; j < Cwomen; j++) {
@@ -132,16 +89,25 @@ public class GaleShaply {
             }
         }
 
+        //checks to make sure that the number of women and men that you are providing are equal
+        if( Rwomen != menpreferences.size()) {
+
+            throw new IllegalArgumentException("the number of your Men and Women are not equal");
+        }
+
+
 
         //Creats matched arrays indexes are husbands and what contains in that index is the wife
         ArrayList<Integer> matched = new ArrayList<>();
         while(matched.size()< menpreferences.size()){matched.add(null);}
+
         //checking the second command word find or check to run the algorithm in the right direction
         if (arg[0].equals("find")) {
 
+            //creating specific data types for unmatched men and women
+            //and filling them with candidates
             StacK<Integer> unMatchedM = new StacK<>();
             ArrayList unMatchedW = new ArrayList();
-
 
             for (int i = menpreferences.size() - 1 ; i >= 0; i--) {
                 unMatchedM.push(i);
@@ -149,7 +115,7 @@ public class GaleShaply {
             for (int i = 0; i <= Rwomen - 1 ; i++) {
                 unMatchedW.add(i);
             }
-
+            //implementing the GaleShaply algorithm
             while (!unMatchedM.isEmpty()) {
                 int i = unMatchedM.pop();
                 for (int j = 0; j < menpreferences.size(); j++) {
@@ -167,30 +133,83 @@ public class GaleShaply {
 
                         break;
 
-                    } else {
-                        continue;
                     }
 
                 }
 
 
             }
+            //prints out an stable matching on the proper file if your computer does not
+            //support the encoding it will throw an exception
+            try {
+                PrintWriter stableMatches = new PrintWriter(arg[3]+".txt","UTF-8");
+                stableMatches.println("your stable matches are below");
+                stableMatches.println("Husbands"+" "+"Wives");
+                for (int i = 0; i < matched.size(); i++) {
+                    stableMatches.println(i + 1 + " " + (matched.get(i) + 1));
 
-            for (int i = 0; i < matched.size(); i++) {
-                System.out.println(i + 1 + " " + (matched.get(i) + 1));
+
+                }
+                stableMatches.close();
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+
+
+
         }
 
 
+        //Cheks the argument to run the checking part of the algorithm
        else if(arg[0].equals( "check")){
             //Reads the data from the matching provided
-            Scanner matchList = new Scanner(new File(arg[3]));
-
-            //number of row and column of the matching type
-            int Rmatched = 4;
-            int Cmatched = 2;
+            Scanner matchList = new Scanner(new File(arg[3]+".txt"));
 
 
+
+
+            //number of rows and columns for matched provided by user
+            int Rmatched = 0;
+            int Cmatched = 0;
+
+            Scanner matchData = new Scanner(new File(arg[3]+".txt"));
+
+            //getting number of the rows and datas from list of matches
+            while (matchData.hasNextLine()){
+                Rmatched++;
+                Scanner ColmatchRedear = new Scanner(matchData.nextLine());
+                Cmatched = 0;
+
+                while (ColmatchRedear.hasNextInt()){
+                    Cmatched++;
+                    ColmatchRedear.nextInt();
+                }
+
+            }
+
+
+            //checking whether or not the data provided are correct
+            // matches are provided in n*2 matrix
+
+
+            if (Cmatched != 2){
+                throw new IllegalArgumentException(
+                        "your matches are more than two persons you " +
+                                "should provide matches in n*2 dimensional matrix");
+            }
+
+            //checks the number of matches and number of people to be the same
+            if (Rmatched != menpreferences.size()){
+                throw new IllegalArgumentException("the number of matches and " +
+                        "number of people are not compatibale");
+            }
+
+
+
+
+
+            //Creates and Array with the size of candidates for matches
             ArrayList<Integer> matched2 = new ArrayList<>();
             while ( matched2.size()< Rmatched){matched2.add(null);}
 
@@ -199,6 +218,7 @@ public class GaleShaply {
                     for (int j = 0; j < Cmatched; ++j) {
 
                        if (matchList.hasNextInt()){
+
                            matched2.set(matchList.nextInt() - 1, matchList.nextInt() - 1);
                        }
 
@@ -206,13 +226,31 @@ public class GaleShaply {
 
                 }
 
+                //checking the perfect matching, checks that all element be in the matched2
+                // at least one and all the indexs contain an element so if an index is null
+                // or there is duplicate this is not perfect matching
+                Set <Integer> dublicate = new HashSet<>(matched2);
+                if (dublicate.size()<matched2.size()) {
+                    throw new IllegalArgumentException("set of matches you provided" +
+                            "are not perfect matching ");
+                }
 
-                //for (int i = 0; i < matched2.size(); i++) {
-                //    System.out.println(i + 1 + " " + (matched2.get(i) + 1));
+                if(menpreferences.size()!= Rwomen || Rwomen!= matched2.size()
+                        || menpreferences.size()!= matched2.size()){
+                    throw new   IllegalArgumentException("\"set of matches you provided\" +\n" +
+                            "                            \"are not perfect matching \"");
+                }
+
 
 
                 }
+
+                //checks the stable matching and print if there is a counter example
+                //stores counter examples in an Array
                 int a = 0;
+
+                ArrayList counterExample = new ArrayList<>();
+
                 for (int i=0;i<matched2.size();++i ){
 
                     for(int j =0; j< menpreferences.size(); j++){
@@ -221,12 +259,14 @@ public class GaleShaply {
                          if(womenreverse[k][i] < womenreverse[k][matched2.indexOf(k)]) {
                             a++;
 
-                                    System.out.println((i + 1) + " " + (k + 1) + "  are an unstable match");
-                                } else {
-                             continue;
+                                    counterExample.add(((i + 1) + " " + (k + 1)));
+                                }
                          }
                         }
-                    }
+                        //printing only the first counter example
+                    if (counterExample!= null){System.out.println(counterExample.get(1)+" Are unstable match");}
+
+                    //Check the counter for counter examples if its 0 then we have a stable match
                     if(a==0){ System.out.println("you have stable matching");}
                     else{
                         System.out.println("your match is not stable");
@@ -244,50 +284,5 @@ public class GaleShaply {
 
 
 
-
-//
-//            // creating a Scanner file for girls preference which file name
-//            // should be the same as your second word of the argument in
-//            // your command line
-//            Scanner girls = new Scanner (new File(arg[2]));
-//
-//            ////reading text from the second argument file and
-//            // putting each integer into its position
-//            while (girls.hasNextLine()){
-//                Scanner WomenPrefReader = new Scanner(girls.nextLine());
-//                ArrayList Ewomenpref = new ArrayList();
-//
-//                while(WomenPrefReader.hasNextInt()){
-//                    Ewomenpref.add(WomenPrefReader.nextInt());
-//                }
-//
-//                womenpreference.add(Ewomenpref);
-//            }
-//
-//            //Testing the men and women preferences
-//
-////            List<Object> mmylist = new ArrayList<Object>(menpreferences);
-////            List<Object> wmylist = new ArrayList<Object>(womenpreference);
-////
-////            for (Object q :menpreferences){System.out.println(q);}
-////            for (Object a: womenpreference){System.out.println(a);}
-//
-//
-//            //Reversing women's preference list for better search
-//
-//            ArrayList[] girl = new ArrayList[]{womenpreference.get(1)};
-//            System.out.println(girl.toString());
-//
-////            for (int i=0; i<= womenpreference.size(); i++ ){
-////
-////
-////                for (int j=0; j<= menpreferences.size(); j++)
-//
-//
-//
-//
-//
-//
-//        }
 
 
