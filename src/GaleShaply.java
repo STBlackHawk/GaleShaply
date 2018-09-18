@@ -1,3 +1,17 @@
+/**This is an Impementation for GaleShaply algorithm
+ * this implementation have its own data type,
+ * men preferences are in Queue and unmarrie men are in Stack.
+ * The assumption of this implementation is that preferences and matching files
+ * all should be in .txt format.
+ * More over you should provide the matches in n*2 matrix to check and see whether or not
+ * you have a stable match
+ * This is for CLass Algorithm Design and Analysis
+ * ECU, Fall of 2018.
+ *
+ * @author Shahin Taghikhani
+ *
+ *
+ */
 
 import java.io.FileNotFoundException;
 import java.io.*;
