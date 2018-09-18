@@ -5,13 +5,14 @@
  * all should be in .txt format.
  * More over you should provide the matches in n*2 matrix to check and see whether or not
  * you have a stable match
+ * This program needs to be compile with java
  * This is for CLass Algorithm Design and Analysis
  * ECU, Fall of 2018.
  *
  * @author Shahin Taghikhani
  *
  *
- */
+ **/
 
 import java.io.FileNotFoundException;
 import java.io.*;
