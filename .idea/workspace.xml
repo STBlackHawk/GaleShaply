@@ -190,7 +190,7 @@
       <updated>1536845147201</updated>
       <workItem from="1536845148778" duration="40833000" />
       <workItem from="1537256361610" duration="785000" />
-      <workItem from="1537267324866" duration="765000" />
+      <workItem from="1537267324866" duration="805000" />
     </task>
     <task id="LOCAL-00001" summary="new way of reading the file">
       <created>1536856968817</created>
@@ -203,11 +203,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42383000" />
+    <option name="totallyTimeSpent" value="42423000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
